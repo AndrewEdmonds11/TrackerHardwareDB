@@ -21,7 +21,12 @@ print("Creating " + outfilename + " for panel ids [" + ', '.join(panel_ids) + "]
 
 insert_sql_file = open(outfilename, 'w')
 for panel_id in panel_ids:
-    insert_sql_file.write("INSERT INTO qc.panels(id) VALUES(" + str(panel_id) + ");\n");
+    panel_id_to_write=str(panel_id)
+    if ("mn" in panel_id) or ("MN" in panel_id):
+        panel_id_to_write = panel_id_to_write.replace("mn", "");
+        panel_id_to_write = panel_id_to_write.replace("MN", "");
+
+    insert_sql_file.write("INSERT INTO qc.panels(id) VALUES(" + panel_id_to_write + ");\n");
 
 print("Done!");
 print("Now check " + outfilename + " looks OK and then run the following command:")
